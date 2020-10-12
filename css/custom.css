@@ -1,0 +1,12 @@
+.header-line {
+	margin-bottom: 1.5rem !important;
+}
+
+.paragraph-line {
+	margin-bottom: 1rem !important;
+}
+
+.image-title{
+	width: 100% !important;
+	background-color: rgba(0, 0, 0, 0.5) !important;
+}
