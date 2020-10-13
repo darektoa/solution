@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Football Mania</title>
+    <meta name="description" content="Love Football Love Winning" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/materialize.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#00897B" />
+  </head>
+  <body>
+    <!-- Navigasi -->
+    <div class="background nav">
+      <div class="container d-flex">
+        <a href="#" data-target="slide-out" class="sidenav-trigger flex-side"
+          ><img class="circle w-50" src="/logo.png" id="logo"
+        /></a>
+        <a href="#" class="brand-logo white-text flex-side" id="logo-text"
+          >&nbsp;
+          <h5>Football Mania</h5></a
+        >
+      </div>
+    </div>
+    <ul id="slide-out" class="sidenav">
+      <li class="t-center">
+        <div class="user-view">
+          <div class="background"></div>
+          <center>
+            <a href="#user"><img class="circle" src="/logo.png"/></a>
+          </center>
+          <a href="#name"
+            ><span class="white-text name">Welcome to Football Mania!</span></a
+          >
+        </div>
+      </li>
+      <li>
+        <a href="#home" class="nav-link">Home</a>
+      </li>
+      <li><a href="#teams" class="nav-link">Teams</a></li>
+      <li><a href="#competitions" class="nav-link">Competitions</a></li>
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">My Favorite</a></li>
+      <li><a class="waves-effect nav-link" href="#!">Saved Articles</a></li>
+    </ul>
+    <!-- Akhir Navigasi -->
+    <div id="body-content"></div>
+    <footer class="page-footer">
+      <div class="container">
+        ©2020 Copyright by Rekrut
+      </div>
+    </footer>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <!-- <script src="js/idb.js"></script> -->
+    <!-- <script src="js/db.js"></script> -->
+    <script src="js/api.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/home.js"></script>
+    <script>
+      // REGISTER SERVICE WORKER
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(function() {
+              console.log("Pendaftaran ServiceWorker berhasil");
+            })
+            .catch(function() {
+              console.log("Pendaftaran ServiceWorker gagal");
+            });
+        });
+      } else {
+        console.log("ServiceWorker belum didukung browser ini.");
+      }
+      // function showNotifikasiTag() {
+      //   const title1 = "Notifikasi dengan Tag - 1";
+      //   const options1 = {
+      //     body: "Anggota tag 1",
+      //     tag: "message-group-1"
+      //   };
+      //   // notifikasi kedua
+      //   const title2 = "Notifikasi dengan Tag - 2";
+      //   const options2 = {
+      //     body: "Anggota tag 2",
+      //     tag: "message-group-2"
+      //   };
+      //   // notifikasi ketiga
+      //   const title3 = "Notifikasi dengan Tag - 3";
+      //   const options3 = {
+      //     body: "Anggota tag 1",
+      //     tag: "message-group-1"
+      //   };
+      //   if (Notification.permission === "granted") {
+      //     navigator.serviceWorker.ready.then(function(registration) {
+      //       registration.showNotification(title1, options1);
+      //       registration.showNotification(title2, options2);
+      //       registration.showNotification(title3, options3);
+      //     });
+      //   } else {
+      //     console.error("Fitur notifikasi tidak diijinkan.");
+      //   }
+      // }
+      // function showNotifikasiRenotify() {
+      //   const title = "Notifikasi dengan Renotify";
+      //   const options = {
+      //     body: "Renotify",
+      //     tag: "message-group-1",
+      //     renotify: true
+      //   };
+      //   if (Notification.permission === "granted") {
+      //     navigator.serviceWorker.ready.then(function(registration) {
+      //       registration.showNotification(title, options);
+      //     });
+      //   } else {
+      //     console.error("Fitur notifikasi tidak diijinkan.");
+      //   }
+      // }
+      // function showNotifikasiSilent() {
+      //   const title = "Notifikasi senyap";
+      //   const options = {
+      //     silent: true
+      //   };
+      //   if (Notification.permission === "granted") {
+      //     navigator.serviceWorker.ready.then(function(registration) {
+      //       registration.showNotification(title, options);
+      //     });
+      //   } else {
+      //     console.error("Fitur notifikasi tidak diijinkan.");
+      //   }
+      // }
+      // function showNotifikasiGambar() {
+      //   const title = "Notifikasi dengan Gambar";
+      //   const options = {
+      //     body: "Ini adalah konten notifikasi dengan gambar latar.",
+      //     image: "/icon.png"
+      //   };
+      //   if (Notification.permission === "granted") {
+      //     navigator.serviceWorker.ready.then(function(registration) {
+      //       registration.showNotification(title, options);
+      //     });
+      //   } else {
+      //     console.error("Fitur notifikasi tidak diijinkan.");
+      //   }
+      // }
+      document.addEventListener("DOMContentLoaded", function() {
+        // getArticles();
+      });
+    </script>
+  </body>
+</html>

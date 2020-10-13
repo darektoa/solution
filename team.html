@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Football Mania</title>
+    <meta name="description" content="Love Football Love Winning" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/materialize.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#00897B" />
+  </head>
+  <body id="team">
+    <!-- Navigasi -->
+    <div class="background nav">
+      <div class="container d-flex">
+        <a
+          href="/index.html"
+          data-target="slide-out"
+          class="sidenav-trigger flex-side"
+          ><i class="material-icons white-text pt-15">arrow_back</i></a
+        >
+        <a href="#" class="brand-logo white-text flex-side" id="logo-text"
+          >&nbsp;
+          <h5>Football Mania</h5></a
+        >
+      </div>
+    </div>
+    <!-- Akhir Navigasi -->
+    <div class="container" id="body-content"></div>
+    <div class="fixed-action-btn">
+      <a class="btn-floating btn-large red" id="save">
+        <i class="large material-icons">save</i>
+      </a>
+    </div>
+    <script type="text/javascript" src="/js/snarkdown.umd.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/idb.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+      // REGISTER SERVICE WORKER
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(function() {
+              console.log("Pendaftaran ServiceWorker berhasil");
+            })
+            .catch(function() {
+              console.log("Pendaftaran ServiceWorker gagal");
+            });
+        });
+      } else {
+        console.log("ServiceWorker belum didukung browser ini.");
+      }
+      document.addEventListener("DOMContentLoaded", function() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var isFromSaved = urlParams.get("saved");
+        var btnSave = document.getElementById("save");
+        if (isFromSaved) {
+          // Hide fab jika dimuat dari indexed db
+          btnSave.style.display = "none";
+
+          // ambil artikel lalu tampilkan
+          getSavedArticleById();
+        } else {
+          var item = getTeamById();
+        }
+        save.onclick = function() {
+          console.log("Tombol FAB di klik.");
+          console.log(item);
+
+          item.then(function(team) {
+            saveForLater(team);
+          });
+        };
+      });
+    </script>
+  </body>
+</html>
