@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Football News</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="shortcut icon" href="/icon/favicon.png">
+  <link rel="apple-touch-icon" href="/icon/favicon.png">
+  <meta name="theme-color" content="#f6f4e0"/>
+  <meta name="description" content="Football News"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/materialize.min.css">
+</head>
+<body>
+
+  <!-- Navigasi -->
+  <nav class="teal lighten-1" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo">Football</a>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger">&#9776;</a>
+
+      <ul class="topnav right hide-on-med-and-down"></ul>
+      <ul id="nav-mobile" class="sidenav"></ul>
+    </div>
+  </nav>
+  <!-- Akhir Navigasi 
+  <div class="body-content container"></div> -->
+  <!--Save data-->
+  <div class="body-content container"  id="body-content"></div>
+  <div class="fixed-action-btn">
+      <a class="btn-floating btn-large red" id="save">
+      <i class="large material-icons">save</i>
+      </a>
+  </div>
+
+  <script src="js/materialize.min.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/table.js"></script>
+  <script src="js/idb.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>
