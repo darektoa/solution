@@ -6,9 +6,6 @@ if (!('serviceWorker' in navigator)) {
     requestPermission();
   }
 
-  document.addEventListener("DOMContentLoaded", function() {
-    getTimById();
-  });
   // Register service worker
   function registerServiceWorker() {
     return navigator.serviceWorker.register('service-worker.js')

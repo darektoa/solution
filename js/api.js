@@ -1,7 +1,7 @@
 const base_url = "https://api.football-data.org/v2/";
 const liga_id = 2002;
 const standing = `${base_url}competitions/${liga_id}/standings/`;
-const tim = `${base_url}/teams/`;
+const tim = `${base_url}teams/`;
 var dataTim;
 
 const fetchAPI = url => {
