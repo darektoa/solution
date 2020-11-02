@@ -38,7 +38,8 @@ self.addEventListener("install", function (event) {
 
 self.addEventListener("fetch", function(event) {
   var base_url = "https://api.football-data.org/v2/";
-  if (event.request.url.indexOf(base_url) > -1) {
+  const online = navigator.onLine;
+  if (event.request.url.indexOf(base_url) > -1 && online) {
     event.respondWith(
       caches.open(CACHE_NAME).then(function(cache) {
         return fetch(event.request).then(function(response) {
