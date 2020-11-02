@@ -1,5 +1,6 @@
 {
   "name": "Serie A Italy",
+  "gcm_sender_id": "724864040148",
   "short_name": "SAItaly",
   "theme_color": "#2d1111",
   "background_color": "#2d1111",

@@ -1,6 +1,6 @@
 var dbPromised = idb.open("serieaitaly", 1, function(upgradeDb) {
   var playersObjectStore = upgradeDb.createObjectStore("players", {
-    keyPath: "ID"
+    keyPath: "id"
   });
   playersObjectStore.createIndex("name", "name", { unique: false });
 });
@@ -11,7 +11,7 @@ function saveForLater(player) {
       var tx = db.transaction("players", "readwrite");
       var store = tx.objectStore("players");
       console.log(player);
-      store.add(player.result);
+      store.put(player);
       return tx.complete;
     })
     .then(function() {

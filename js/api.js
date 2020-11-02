@@ -27,6 +27,34 @@ const error = error => {
 
 // Data tim liga italia
 const getTeams = () => {
+  if ("caches" in window) {
+    caches.match(BASE_URL + "teams").then(function(response) {
+      if (response) {
+        response.json().then(function(data) {
+          var teamsHTML = "";
+          data.result.forEach(function(team) {
+            teamsHTML += `
+            <div class="card-content">
+            <span class="card-title truncate"><b>${team.name}</b></span>
+          </div>
+        <div class="card">
+          <div class="card-image waves-effect waves-block waves-light center-align">
+            <img width="150" height="150" src="${team.crestUrl}" /> 
+            <hr>
+            Website: ${team.website} <br>
+            Stadion: ${team.venue} <br>
+            Warna Tim: ${team.clubColors}
+          </div>
+        </div>
+                `;
+          });
+          // Sisipkan komponen card ke dalam elemen dengan id #content
+          document.getElementById("teams").innerHTML = teamsHTML;
+        });
+      }
+    });
+  }
+
   fetch(`${BASE_URL}competitions/2019/teams`, options)
     .then(status)
     .then(json)
@@ -194,7 +222,7 @@ function getSavedPlayers() {
       playersHTML += `
       <div class="card"> 
         <div>
-        <a href="./players.html?id=${player.ID}&saved=true">
+        <a href="./players.html?id=${player.id}&saved=true">
         <span class="card-title truncate"><b>Pemain: ${player.name}</b></span>
         <span class="card-title truncate">Tanggal Lahir: ${player.dateOfBirth}</span>
         <span class="card-title truncate">Tempat Kelahiran: ${player.countryOfBirth}</span>
@@ -211,18 +239,14 @@ function getSavedPlayers() {
 
 function getSavedPlayerById() {
   var urlParams = new URLSearchParams(window.location.search);
-  var idParam = urlParams.get("id");
+  const idParam = parseInt(urlParams.get("id"));
   
-  getById(idParam).then(function(article) {
+  getById(idParam).then(function(players) {
     playersHTML = '';
     var playersHTML = `
     <div class="card">
       <div class="card-image waves-effect waves-block waves-light">
         <img src="${players.name}" />
-      </div>
-      <div class="card-content">
-        <span class="card-title">${player.post_title}</span>
-        ${snarkdown(player.post_content)}
       </div>
     </div>
   `;

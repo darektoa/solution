@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (page === "home") {
             getArticles();
           } else if (page === "saved") {
-            getSavedArticles();
+            getSavedPlayers();
           }
           else if(page === 'teams'){
             getTeams();
