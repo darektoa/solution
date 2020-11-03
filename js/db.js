@@ -49,9 +49,9 @@ function getById(id) {
 
 const dbDeletePlayer = playerId => {
   return new Promise((resolve, reject) => {
-      idbPromised.then(db => {
+      dbPromised.then(db => {
           const transaction = db.transaction("players", `readwrite`);
-          transaction.objectStore("players").delete(playerId);
+          transaction.objectStore("players").delete(Number(playerId));
           return transaction;
       }).then(transaction => {
           if (transaction.complete) {

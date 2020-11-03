@@ -240,7 +240,7 @@ function getSavedPlayers() {
                button.addEventListener("click", function (event) {
                    let playerId = event.target.id;
                    dbDeletePlayer(playerId).then(() => {
-                       showAllPlayer()
+                       getSavedPlayers()
                    })
                })
            }
