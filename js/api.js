@@ -217,23 +217,33 @@ function getSavedPlayers() {
   getAll().then(function(players) {
     console.log(players);
     // Menyusun komponen card artikel secara dinamis
-    var playersHTML = "";
+    var savedHTML = "";
     players.forEach(function(player) {
-      playersHTML += `
+      savedHTML += `
       <div class="card"> 
         <div>
-        <a href="./players.html?id=${player.id}&saved=true">
+        
         <span class="card-title truncate"><b>Pemain: ${player.name}</b></span>
         <span class="card-title truncate">Tanggal Lahir: ${player.dateOfBirth}</span>
         <span class="card-title truncate">Tempat Kelahiran: ${player.countryOfBirth}</span>
         <span class="card-title truncate">Warga Negara: ${player.nationality}</span>
         <span class="card-title truncate">Posisi: ${player.position}</span>
+        <button id="${player.id}" class="removeButton">Remove</button>
         </div>
       </div>
       `;
     });
     // Sisipkan komponen card ke dalam elemen dengan id #body-content
-    document.getElementById("body-content").innerHTML = playersHTML;
+    document.getElementById("body-content").innerHTML = savedHTML;
+    let removeButtons = document.querySelectorAll(".removeButton");
+           for(let button of removeButtons) {
+               button.addEventListener("click", function (event) {
+                   let playerId = event.target.id;
+                   dbDeletePlayer(playerId).then(() => {
+                       showAllPlayer()
+                   })
+               })
+           }
   });
 }
 

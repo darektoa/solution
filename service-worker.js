@@ -8,6 +8,7 @@ var urlsToCache = [
   "/pages/klasemen.html",
   "/pages/contact.html",
   "/pages/topscore.html",
+  "/pages/saved.html",
   "/manifest.json",
   "/css/materialize.min.css",
   "/js/materialize.min.js",

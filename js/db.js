@@ -46,3 +46,19 @@ function getById(id) {
       });
   });
 }
+
+const dbDeletePlayer = playerId => {
+  return new Promise((resolve, reject) => {
+      idbPromised.then(db => {
+          const transaction = db.transaction("players", `readwrite`);
+          transaction.objectStore("players").delete(playerId);
+          return transaction;
+      }).then(transaction => {
+          if (transaction.complete) {
+              resolve(true)
+          } else {
+              reject(new Error(transaction.onerror))
+          }
+      })
+  })
+};

@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
             getTeams();
           }else if(page === 'klasemen'){
             getStandings();
-          } else if(page === 'topscore'){
+          } else if (page === 'topscore'){
             getScorers();
           }
            
