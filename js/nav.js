@@ -45,9 +45,12 @@ document.addEventListener("DOMContentLoaded", () =>{
                 let content = document.querySelector("#body-content");
                 if (this.status === 200) {
                     content.innerHTML = xhttp.responseText;
-                    getAllTeams();
-                    getAllMatches();
-                    getAllStandings();
+                    if(page == 'team') {
+                        getAllTeams();
+                    } if(page === 'saved') {
+                        getSaveTeam();
+                    }
+
                 } else if (this.status === 400) {
                     content.innerHTML = "<p> Halaman tidak ditemukan. </p>";
                 } else {

@@ -4,6 +4,7 @@ const urlsToCache = [
     "/",
     "/index.html",
     "/nav.html",
+    "/article.html",
     "/manifest.json",
     "/icons/favicon.png",
     "/icons/apple-icon.png",
@@ -14,7 +15,10 @@ const urlsToCache = [
     "/js/api.js",
     "/js/materialize.min.js",
     "/js/idb.js",
-    "/js/nav.js"
+    "/js/nav.js",
+    "/pages/team.html",
+    "/pages/saved.html",
+    "/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2"
 ];
 
 self.addEventListener("install", function (event) {

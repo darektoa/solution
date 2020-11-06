@@ -4,8 +4,7 @@ const base_URL = "https://api.football-data.org/v2/";
 const LEAGUE_ID = 2021;
 
 const ENDPOINT_COMPETITION = `${base_URL}competitions/${LEAGUE_ID}/teams`;
-const ENDPOINT_MATCHES = `${base_URL}competitions/${LEAGUE_ID}/matches`;
-const ENDPOINT_STANDING = `${base_URL}competitions/${LEAGUE_ID}/standings`;
+
 
 const fetchAPI = url => {
     return fetch(url, {
@@ -32,7 +31,7 @@ function getAllTeams() {
         caches.match(ENDPOINT_COMPETITION).then(response => {
             if (response) {
                 response.json().then(data => {
-                    console.log(`Competition Data : ${data}`)
+                    console.log(`Club Data : ${data}`)
                     showTeam(data);
                 })
             }
@@ -56,7 +55,10 @@ function showTeam(data) {
     data.teams.forEach(team => {
         teams += `
                 <tr>
-                    <td><img class="responsive-img" src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="40px" alt="badge"/></td>
+                    <td>
+                    <a href="./article.html?id=${team.id}">
+                    <img class="responsive-img" src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="40px" alt="badge"/>
+                    </a></td>
                     <td>${team.name}</td>
                     <td>${team.address}</td>
                     <td class="center">${team.founded}</td>
@@ -65,10 +67,11 @@ function showTeam(data) {
     });
 
      teamElement.innerHTML = `
-                <div class="card" style="padding-left: 24px; padding-right: 24px; margin-top: 30px;">
+            <div class="card" style="padding-left: 24px; padding-right: 24px; margin-top: 30px;">
 
                 <table class="striped responsive-table">
                     <thead>
+                        
                         <tr>
                             <th class="center">Logo Team</th>
                             <th class="center">Team Name</th>
@@ -80,134 +83,63 @@ function showTeam(data) {
                         ${teams}
                     </tbody>
                 </table>
-                
-                </div>
+            </div>
     `;
 }
 
-//fungsi untuk melihat pertandingan yang ada di liga inggris
-function getAllMatches(){
-    if("caches" in window) {
-        caches.match(ENDPOINT_MATCHES).then(response =>{
-            if(response) {
-                response.json().then(data=> {
-                    console.log(`Match Competitions : ${data}`);
-                    getMatch(data);
-                })
-            }
-        })
-    }
+//Fungsi untuk melihat squad team liga inggris
+function getTeamById() {
+        const urlParams = new URLSearchParams(window.location.search);
+        let idParams = urlParams.get("id");
 
-    fetchAPI(ENDPOINT_MATCHES)
-    .then(data => {
-        getMatch(data);
+        if("caches" in window){
+            caches.match(`${base_URL}/teams/${idParams}`).then(response => {
+                if (response) {
+                    response.json().then(squad => {
+                        console.log(`Club Team Data : ${squad}`)
+                        showTeamById(squad);
+                    })
+                }
+            })
+        }
+    fetchAPI(`${base_URL}/teams/${idParams}`)
+    .then(squad => {
+        showTeamById(squad);
     })
     .catch(error => {
         console.log(error)
     })
 }
 
-function getMatch(data){
-    let matches = "";
-    let matchElement = document.getElementById("matchPremier");
+function showTeamById(squad){
+    let squadElement = document.getElementById("body-content")
 
-    data.matches.forEach(match => {
-        matches += ` 
-            <tr>
-                <td>${match.utcDate}</td>
-                <td>${match.status}</td>
-                <td>${match.homeTeam.name}</td>
-                <td>${match.score.fullTime.homeTeam}</td>
-                <td>${match.awayTeam.name}</td>
-                <td>${match.score.fullTime.awayTeam}</td>
-            </tr>
+    squad.squad.forEach(player =>{
+        squad += ` 
+                <tr>
+                <td>${player.name}</td>
+                <td>${player.position}</td>
+                <td>${player.nationality}</td>
+                <td>${player.role}</td>
+                </tr>
         `;
     });
 
-    matchElement.innerHTML =` 
+    squadElement.innerHTML = `
         <div class="card" style="padding-left: 24px; padding-right: 24px; margin-top: 30px;">
-
-        <table class="striped responsive-table">
-        <thead>
-            <tr>
-                <th>Jadwal</th>
-                <th>Status</th>
-                <th>Home</th>
-                <th>Score</th>
-                <th>Away</th>
-                <th>Score</th>
-            </tr>
-        </thead>
-        <tbody id="matches">
-            ${matches}
-        </tbody>
-    </table>
-    </div>
-    `;
-}
-
-//Fungsi untuk melihat papan klasemen liga inggris
-function getAllStandings(){
-    if("caches" in window) {
-        caches.match(ENDPOINT_STANDING).then(response => {
-            if(response){
-                response.json().then(data => {
-                    console.log(`Standing Data: ${data}`);
-                    showStanding(data);
-                })
-            }
-        })
-    }
-
-    fetchAPI(ENDPOINT_STANDING)
-        .then(data => {
-            showStanding(data);
-        })
-        .catch(error => {
-            console.log(error)
-        })
-}
-
-function showStanding(data) {
-    let standings = "";
-    let standingElement = document.getElementById("leagueStanding")
-
-    data.standings[0].table.forEach(standing => {
-        standings += `
-                <tr>
-                    <td><img src="${standing.team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="30px" alt="badge"/></td>
-                    <td>${standing.team.name}</td>
-                    <td>${standing.won}</td>
-                    <td>${standing.draw}</td>
-                    <td>${standing.lost}</td>
-                    <td>${standing.goalsFor}</td>
-                    <td>${standing.goalsAgainst}<td>
-                    <td>${standing.goalDifference}</td>
-                    <td>${standing.points}</td>
-                </tr>
-        `;
-    });
-
-    standingElement.innerHTML = `
-            <div class="card" style="padding-left: 24px; padding-right:24px; margin-top: 30px;">
-
-        <table class="striped responsive-table">
+            <table class="striped responsive-table">
             <thead>
-                <tr>
-                    <th></th>
-                    <th>Team Name</th>
-                    <th>W</th>
-                    <th>D</th>
-                    <th>L</th>
-                    <th>GF</th>
-                    <th>GA</th>
-                    <th>GD</th>
-                    <th>Point</th>
-                </tr>
+                    <tr>
+                        <th class="center">Nama</th>
+                        <th class="center">Posisi</th>
+                        <th class="center">Kebangsaan</th>
+                        <th class="center">Jabatan</th>
+                    </tr>
             </thead>
-            <tbody id="standings">
-                ${standings}
-            </tbody>
-        </table>
+                <tbody id="squad">
+                ${squad}
+                </tbody>
+            </table> 
+        </div>       
     `;
-}
+} 
