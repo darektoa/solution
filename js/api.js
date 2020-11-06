@@ -95,9 +95,9 @@ function getTeamById() {
         if("caches" in window){
             caches.match(`${base_URL}/teams/${idParams}`).then(response => {
                 if (response) {
-                    response.json().then(squad => {
-                        console.log(`Club Team Data : ${squad}`)
-                        showTeamById(squad);
+                    response.json().then(squads => {
+                        console.log(`Club Team Data : ${squads}`)
+                        showTeamById(squads);
                     })
                 }
             })
@@ -111,12 +111,17 @@ function getTeamById() {
     })
 }
 
-function showTeamById(squad){
-    let squadElement = document.getElementById("body-content")
+function showTeamById(squads){
+    let squad = '';
+    let squadElement = document.getElementById("body-content");
+    let activeCompetitions = '';
 
-    squad.squad.forEach(player =>{
+    //deklarasi ini to bingung gw make index array nya 
+    squads.activeCompetitions.
+    squads.squad.forEach(player =>{
         squad += ` 
                 <tr>
+                <td>${player.id}</td>
                 <td>${player.name}</td>
                 <td>${player.position}</td>
                 <td>${player.nationality}</td>
@@ -130,6 +135,7 @@ function showTeamById(squad){
             <table class="striped responsive-table">
             <thead>
                     <tr>
+                        <th class="center">ID</th>
                         <th class="center">Nama</th>
                         <th class="center">Posisi</th>
                         <th class="center">Kebangsaan</th>
@@ -143,3 +149,22 @@ function showTeamById(squad){
         </div>       
     `;
 } 
+
+/*
+function getSavedTeam(){
+    getAll().then(squads =>{
+        console.log(squads);
+        let squad = "";
+        squads.forEach(player => {
+            squad += `
+            <tr>
+            <td><a href="./article.html?id=${team.id}&saved=true"></a><td>
+            <td>${player.name}</td>
+            <td>${player.position}</td>
+            <td>${player.nationality}</td>
+            <td>${player.role}</td>
+            </tr>
+             `;
+        });
+    })
+} */
