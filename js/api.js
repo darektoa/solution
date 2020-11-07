@@ -102,9 +102,10 @@ function getTeamById() {
                 }
             })
         }
-    fetchAPI(`${base_URL}/teams/${idParams}`)
+    return fetchAPI(`${base_URL}/teams/${idParams}`)
     .then(squad => {
         showTeamById(squad);
+        return Promise.resolve(squad);
     })
     .catch(error => {
         console.log(error)
@@ -213,7 +214,7 @@ function getSavedTeamById(){
         <tr>
         <td><a href="./article.html?id=${player.id.team_id}&saved=true"></a><td>
         <td>${player.name.team_name}</td>
-        <td>${player.position.team_poisition}</td>
+        <td>${player.position.team_position}</td>
         <td>${player.nationality.team_nationality}</td>
         <td>${player.role.team_role}</td>
         </tr>
