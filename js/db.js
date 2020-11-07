@@ -1,11 +1,12 @@
 const idbPromised = idb.open('teams', 1, upgradedB => {
-    if(!upgradedB.objectStoreNames.contains('teams_save')){
-        let indexTeamSaved = upgradedB.createObjectStore("teams_save",{
+    if(!upgradedB.objectStoreNames.contains('teams')){
+        let indexTeamSaved = upgradedB.createObjectStore("teams",{
             keyPath: "id"
         });
-    indexTeamSaved.createIndex("club_name", "team_id", "team_name", "team_position", "team_nationality", "team_role",{
-        unique: false,
-    });
+        
+        indexTeamSaved.createIndex("team_id", "id",{
+            unique: false,
+        });
     }
 });
 
@@ -27,8 +28,8 @@ function getAll(){
 function dbInsert(squad){
     idbPromised
     .then(db => {
-        const tx = db.transaction("squads","readwrite");
-        let store = tx.objectStore("squads");
+        const tx = db.transaction("teams","readwrite");
+        let store = tx.objectStore("teams");
         console.log(squad);
         store.put(squad);
         return tx.complete;
@@ -42,8 +43,8 @@ function dbDelete(squadId){
     return new Promise((resolve, reject) => {
         idbPromised
         .then(db => {
-            const tx = db.transaction("squads", "readwrite");
-            tx.objectStore("squads").delete(squadId);
+            const tx = db.transaction("teams", "readwrite");
+            tx.objectStore("teams").delete(squadId);
             return tx;
         }).then (tx => {
             if (tx.complete) {

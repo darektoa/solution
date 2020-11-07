@@ -102,9 +102,11 @@ function getTeamById() {
                 }
             })
         }
-    fetchAPI(`${base_URL}/teams/${idParams}`)
+    
+    return fetchAPI(`${base_URL}/teams/${idParams}`)
     .then(squad => {
         showTeamById(squad);
+        return Promise.resolve(squad);
     })
     .catch(error => {
         console.log(error)

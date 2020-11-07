@@ -57,6 +57,7 @@
     document.addEventListener("DOMContentLoaded", ()=> {
         let urlParams = new URLSearchParams(window.location.search);
         let isFromSaved = urlParams.get("saved");
+        let item;
 
         let btnSave = document.getElementById("save");
 
@@ -65,14 +66,16 @@
 
             getSavedTeamById();
         } else {
-            let item = getTeamById()
+            getTeamById()
+            .then((squad)=>{
+                console.log(squad);
+                item = squad;
+            })
         }
 
-            btnSave.onclick = () => {
-                console.log("Tombol FAB di klik");
-                item.then(function (squad){
-                    dbInsert(squad);
-            });
+        btnSave.onclick = () => {
+            console.log("Tombol FAB di klik");
+            dbInsert(item);
         };
     });
 </script>
