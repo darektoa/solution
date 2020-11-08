@@ -157,54 +157,46 @@ function showTeamById(squads){
 
 
 function getSaveTeam(){
-    getAll().then(squads =>{
-        console.log(squads['name'])
-        console.log(squads['crestUrl'])
-        let squadElement = document.getElementById("body-content");
-        console.log(squads)
-        let squad = "";
-        squads.forEach(player => {
-            squad += `
-            <tr>
-            <td><a href="./article.html?id=${player.id.team_id}&saved=true"></a><td>
-            <td>${player.name.team_name}</td>
-            <td>${player.position.team_poisition}</td>
-            <td>${player.nationality.team_nationality}</td>
-            <td>${player.role.team_role}</td>
-            </tr>
-             `;
-        });
-
-        squadElement.innerHTML = `
-            <div class="card" style="padding-left: 24px; padding-right: 24px; margin-top: 30px;">
+    getAll().then(teams =>{
+        const container = document.getElementById("body-content")
+        teams.map(team => {
+            const detailElement = `
+                <div class="card" style="padding-left: 24px; padding-right: 24px; margin-top: 30px;>
                 <div class="row">
                 <div class="card-content small" style="text-align: center;">
-                <img class="responsive-img" src="${squads.crestUrl.replace(/^http:\/\//i, 'https://')}" width="50px" alt="badge"/>   
-                <h2 class="center responsive-text">${squads.name.club_name}</h2>
-                </div>   
+                <img class="responsive-image" src="${team.crestUrl.replace(/^http:\/\//i,'https://')}" width="50px" alt="badge/>
+                <h2 class="center responsive-text">${team.name}</h2>
+                </div>
                 <table class="striped responsive-table">
                 <thead>
-                        <tr>
-                            <th class="center">ID</th>
-                            <th class="center">Nama</th>
-                            <th class="center">Posisi</th>
-                            <th class="center">Kebangsaan</th>
-                            <th class="center">Jabatan</th>
-                        </tr>
+                    <tr>
+                        <th class="center">ID</th>
+                        <th class="center">Nama</th>
+                        <th class="center">Posisi</th>
+                        <th class="center">Kebangsaan</th>
+                        <th class="center">Jabatan</th>
+                    </tr>
                 </thead>
                     <tbody id="squad">
-                    ${squad}
+                    ${team.squad.map(player=>(
+                        `<tr>
+                            <td><a href="./article.html?id=${player.id}&saved=true"></a><td>
+                            <td>${player.name}</td>
+                            <td>${player.position}</td>
+                            <td>${player.nationality}</td>
+                            <td>${player.role}</td>
+                        </tr>`
+                    )).join('')}
                     </tbody>
-                </table> 
-            </div>       
-        `;
+                </table>
+            </div>`;
+
+            container.innerHTML += detailElement
+        })
     });
 } 
 
 function getSavedTeamById(){
-    console.log(squads['name'])
-    console.log(squads['crestUrl'])
-    let squad = '';
     let urlParams = new URLSearchParams(window.location.search);
     let idParam = urlParams.get("id");
 

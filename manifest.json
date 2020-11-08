@@ -5,6 +5,7 @@
     "start_url":"/index.html",
     "display": "standalone",
     "background_color": "#4dd0e1",
+    "gcm_sender_id": "44112752474",
     "icons": [
         {
             "src": "/icons/pwa-32.png",

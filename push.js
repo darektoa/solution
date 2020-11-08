@@ -2,8 +2,8 @@ let webPush = require('web-push');
 
 //key di dapat dari hasil run npm 'web-push generate-vapid-keys --json' 
 const vapidKeys = {
-    "publicKey" : "BIcg0v6mAKovsVY_j3f7LlluHz7GQ6eYN3GqMpJUywXgzYLaNm7YsAaNlQS7o-cnrsE_KFXN3wx1Ldp9RYq3ZrU",
-    "privateKey" : "j8b-j0J2Apt2J9sQ1ZX69GoQuk0SBE1QWO-GytA__po"
+    "publicKey" : "BE0UoDsbl1y1ZUeg4q6M8OppRXMa8t5AMF3MlkiBVBPKcqIwGKafcgfdWwxUmc4_qglV3ruPWnFJL8KDBshtKBA",
+    "privateKey" : "gCLN5L9WJRwJehoHUibze9usHw9ek97BesSAnsKIicA"
 };
 
 webPush.setVapidDetails(

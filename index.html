@@ -28,24 +28,7 @@
 <script src="js/api.js"></script>
 <script src="js/idb.js"></script>
 <script src="js/db.js"></script>
-
-
-<script>
-    if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () =>{
-            navigator.serviceWorker
-            .register("/service-worker.js")
-            .then( () => {
-                console.log("Pendaftaran ServiceWorker berhasil");
-            })
-            .catch(() => {
-                console.log("Pendaftaran ServiceWorker gagal !");
-            });
-        });
-    } else {
-        console.log("ServiceWorker belum didukung di browser ini.");
-    }
-</script>
+<script src="notification.js"></script>
 
 </body>
 <footer class="page-footer indigo lighten-2">
