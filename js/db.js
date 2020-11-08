@@ -37,7 +37,7 @@ function dbInsert(squad){
 
 function dbDelete(idTeam){
     return idbPromised.then(db => {
-        const tx = db.transaction("teams_save","readonly")
+        const tx = db.transaction("teams_save","readwrite")
         return tx.objectStore("teams_save").delete(idTeam)
     }).then(teams => {
         console.log('Team berhasil di hapus')

@@ -164,7 +164,9 @@ function getSaveTeam(){
                 <div class="card" style="padding-left: 24px; padding-right: 24px; margin-top: 30px;>
                 <div class="row">
                 <div class="card-content small" style="text-align: center;">
+                <a href="./article.html?id=${team.id}>
                 <img class="responsive-image" src="${team.crestUrl.replace(/^http:\/\//i,'https://')}" width="50px" alt="badge/>
+                </a>
                 <h2 class="center responsive-text">${team.name}</h2>
                 </div>
                 <table class="striped responsive-table">
@@ -179,7 +181,7 @@ function getSaveTeam(){
                 </thead>
                     <tbody id="squad">
                     ${team.squad.map(player=>(
-                        `<tr>
+                        `<tr class="center">
                             <td><a href="./article.html?id=${player.id}&saved=true"></a><td>
                             <td>${player.name}</td>
                             <td>${player.position}</td>
@@ -192,6 +194,12 @@ function getSaveTeam(){
             </div>`;
 
             container.innerHTML += detailElement
+
+            document.getElementById("delete").onclick = () => {
+                const idTeam = new URLSearchParams(window.location.search).get('id');
+                dbDelete(Number(idTeam));
+                console.log("Tombol FAB di Klik");
+            }
         })
     });
 } 
@@ -200,40 +208,58 @@ function getSavedTeamById(){
     let urlParams = new URLSearchParams(window.location.search);
     let idParam = urlParams.get("id");
 
-    getTeamById(idParam).then(player => {
-        squad = '';
-        squad += `
-        <tr>
-        <td><a href="./article.html?id=${player.id.team_id}&saved=true"></a><td>
-        <td>${player.name.team_name}</td>
-        <td>${player.position.team_position}</td>
-        <td>${player.nationality.team_nationality}</td>
-        <td>${player.role.team_role}</td>
-        </tr>
-         `;
-    });
-
-    squadElement.innerHTML = `
-        <div class="card" style="padding-left: 24px; padding-right: 24px; margin-top: 30px;">
+    getTeamById(idParam).then(teams => {
+        const container = document.getElementById("body-content")
+        teams.map(team => {
+            const detailElement = `
+            <div class="card" style="padding-left: 24px; padding-right: 24px; margin-top: 30px;>
             <div class="row">
             <div class="card-content small" style="text-align: center;">
-            <img class="responsive-img" src="${squads.crestUrl.replace(/^http:\/\//i, 'https://')}" width="50px" alt="badge"/>   
-            <h2 class="center responsive-text">${squads.name.club_name}</h2>
-            </div>   
+            <a href="./article.html?id=${team.id}>
+            <img class="responsive-image" src="${team.crestUrl.replace(/^http:\/\//i,'https://')}" width="50px" alt="badge/>
+            </a>
+            <h2 class="center responsive-text">${team.name}</h2>
+            </div>
             <table class="striped responsive-table">
             <thead>
-                    <tr>
-                        <th class="center">ID</th>
-                        <th class="center">Nama</th>
-                        <th class="center">Posisi</th>
-                        <th class="center">Kebangsaan</th>
-                        <th class="center">Jabatan</th>
-                    </tr>
+                <tr>
+                    <th class="center">ID</th>
+                    <th class="center">Nama</th>
+                    <th class="center">Posisi</th>
+                    <th class="center">Kebangsaan</th>
+                    <th class="center">Jabatan</th>
+                </tr>
             </thead>
-                <tbody id="squad">
-                ${squad}
-                </tbody>
-            </table> 
-        </div>       
-    `;
+        <tbody id="squad">
+            ${team.squad.map(player=>(
+                `<tr class="center">
+                    <td><a href="./article.html?id=${player.id}&saved=true"></a><td>
+                    <td>${player.name}</td>
+                    <td>${player.position}</td>
+                    <td>${player.nationality}</td>
+                    <td>${player.role}</td>
+                </tr>`
+                )).join('')}
+            </tbody>
+        </table>
+        </div>`;
+
+        container.innerHTML += detailElement
+       })
+    });
+}
+
+function showNotifikasiIkon() {
+    const title = 'Notifikasi Save';
+    const options = {
+        'body': 'Artikel anda berhasil di simpan',
+        'icon': '/icons/pwa-512.png'
+    };
+    if (Notification.permission === 'granted') {
+        navigator.serviceWorker.ready.then(function(registration) {
+            registration.showNotification(title, options);
+        });
+    } else {
+        console.error('Fitur notifikasi tidak diijinkan.');
+    }
 }
