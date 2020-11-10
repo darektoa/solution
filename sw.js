@@ -11,7 +11,6 @@ const urlsToCache = [
   "/css/materialize.css",
   "/css/style.css",
   "/js/api.js",
-  "/js/lib.js",
   "/js/main.js",
   "/js/materialize.js",
   "/js/nav.js",
@@ -32,8 +31,9 @@ self.addEventListener("install", (event) => {
 // fetch aset dari cache
 self.addEventListener("fetch", (event) => {
   const base_url = "https://api.football-data.org/";
+  const online = navigator.onLine;
 
-  if (event.request.url.indexOf(base_url) > -1) {
+  if (event.request.url.indexOf(base_url) > -1 && online) {
     event.respondWith(
       caches.open(CACHE_NAME).then((cache) => {
         return fetch(event.request).then((response) => {
@@ -45,7 +45,7 @@ self.addEventListener("fetch", (event) => {
   } else {
     event.respondWith(
       caches.match(event.request, { ignoreSearch: true }).then((response) => {
-        return response || fetch(response.request);
+        return response || fetch(event.request);
       })
     );
   }
