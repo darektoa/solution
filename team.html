@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Football API</title>
+    <link rel="stylesheet" href="css/materialize.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- <div id="loader"></div> -->
+    <header>
+      <nav class="blue lighten-1">
+        <div class="nav-wrapper container">
+          <a href="index.html" class="brand-logo">Premier Leageu</a>
+          <a href="#" data-target="mobile" class="sidenav-trigger">Menu</a>
+          <ul class="topnav right hide-on-med-and-down"></ul>
+        </div>
+        <ul class="sidenav" id="mobile"></ul>
+      </nav>
+    </header>
+    <main>
+      <section class="main">
+        <section class="container team">
+          <div class="row summary">
+            <h4>Summary</h4>
+            <div class="col m3">
+              <div class="card">
+                <div class="card-image"></div>
+                <div class="card-content"></div>
+              </div>
+            </div>
+            <div class="col m3">Kolom 2</div>
+          </div>
+          <div class="row active-competitions">
+            <h4>Active Competitions</h4>
+            <div class="col s12">
+              <table class="striped responsive-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th>Code</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row players">
+            <h4>Players</h4>
+            <div class="col s12">
+              <table class="striped responsive-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Role</th>
+                    <th>Birth Date</th>
+                    <th>Nationality</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+    <footer></footer>
+
+    <!--JavaScript-->
+    <script src="js/main.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        getTeam();
+      });
+    </script>
+    <!-- Register Service Worker -->
+  </body>
+</html>
