@@ -89,27 +89,35 @@ function showTeam(data) {
 
 //Fungsi untuk melihat squad team liga inggris
 function getTeamById() {
-        const urlParams = new URLSearchParams(window.location.search);
-        let idParams = urlParams.get("id");
+    const urlParams = new URLSearchParams(window.location.search);
+    let idParams = urlParams.get("id");
 
-        if("caches" in window){
-            return caches.match(`${base_URL}/teams/${idParams}`)
-                .then(response => {
-                    if (response) {
-                        response.json().then(squads => {
-                            console.log(`Club Team Data : ${squads}`)
-                                showTeamById(squads);
-                    })
-                    } else {
-                        return fetchAPI(`${base_URL}/teams/${idParams}`)
-                        .then(squad => {
-                            showTeamById(squad);
-                                return Promise.resolve(squad);
-                    })
-                        .catch(error => {
-                            console.log(error)
-                    })
-                }
+    if("caches" in window){
+        return caches
+        .match(`${base_URL}/teams/${idParams}`)
+        .then(response => {
+            console.log(response)
+            if (response) {
+                console.log(response);
+                return response.json()
+                .then(squads => {
+                    console.log('From Cache')
+                    console.log(squads);
+                    showTeamById(squads);
+                    return Promise.resolve(squads);
+                })
+            }else {
+                return fetchAPI(`${base_URL}/teams/${idParams}`)
+                .then(squad => {
+                    console.log('From Fetch')
+                    console.log(squad)
+                    showTeamById(squad);
+                    return Promise.resolve(squad);
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+            }
         })
     }
 }
