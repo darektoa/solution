@@ -14,10 +14,10 @@ webPush.setVapidDetails(
 
 //untuk endpoint dan keys p256dh terdapat pada console di chrome
 let pushSubscription = {
-    "endpoint" : "https://fcm.googleapis.com/fcm/send/cbmSHzWJ3ZM:APA91bH9rDEqYG8qiueQFGb7IgBB42Z4W8MiAyvcVQIwtNi3xKXcz7V9yee3s5m7crQ2TxKNvF5zgC50HHxea4pfJC0s23c8rwokSOjQJ0HbXutZfWGMUfK2n3CQPhInjdUcfXiemcKj",
+    "endpoint" : "https://fcm.googleapis.com/fcm/send/fhg2CQsAItc:APA91bFioHtW3qHRsq3WA5jJcMOssyBGB4nkQZg1ijji1EdEhkqIUW0X74hzsfRexKD-m7VakWBi0OgaaOtr55FhehgpN-Glro7YwDgD4stG1vEAFc-tUOsccijNwScM_0Z66y0GuktQ",
     "keys" : {
-        "p256dh": "BH/FHHEmRcV9pEQiy/rZ4uqtjMFiWtH0KpwcRnx6T1Ej/cmEjFPkiN6ubgjld4HTAVPpeqMGyHTC19Kpqc4Qwhk=",
-        "auth": "5nyaQHDmHt37tSXbAbJDsA=="
+        "p256dh": "BPTp8fEoyXrWKQ3zmO2y89boZ4Qot4jv2AObxdNcLkApe4JABG60EXwhVx8EWQKVRHZywpGdPAEE0oDOGIHUfZE=",
+        "auth": "m9CGwfFtlxBDGVrv3FzdrA=="
     }
 };
 var payload = 'Selamat! Aplikasi Anda sudah dapat menerima push notifikasi!';

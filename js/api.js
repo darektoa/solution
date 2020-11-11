@@ -56,7 +56,7 @@ function showTeam(data) {
         teams += `
                 <tr>
                     <td>
-                    <a href="./article.html?id=${team.id}">
+                    <a href="./squad.html?id=${team.id}">
                     <img class="responsive-img" src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="40px" alt="badge"/>
                     </a></td>
                     <td>${team.name}</td>
@@ -93,23 +93,25 @@ function getTeamById() {
         let idParams = urlParams.get("id");
 
         if("caches" in window){
-            caches.match(`${base_URL}/teams/${idParams}`).then(response => {
-                if (response) {
-                    response.json().then(squads => {
-                        console.log(`Club Team Data : ${squads}`)
-                        showTeamById(squads);
+            caches.match(`${base_URL}/teams/${idParams}`)
+                .then(response => {
+                    if (response) {
+                        response.json().then(squads => {
+                            console.log(`Club Team Data : ${squads}`)
+                                showTeamById(squads);
+                    })
+                    } else {
+                        return fetchAPI(`${base_URL}/teams/${idParams}`)
+                        .then(squad => {
+                            showTeamById(squad);
+                                return Promise.resolve(squad);
+                    })
+                        .catch(error => {
+                            console.log(error)
                     })
                 }
-            })
-        }
-    return fetchAPI(`${base_URL}/teams/${idParams}`)
-    .then(squad => {
-        showTeamById(squad);
-        return Promise.resolve(squad);
-    })
-    .catch(error => {
-        console.log(error)
-    })
+        })
+    }
 }
 
 function showTeamById(squads){
@@ -163,26 +165,26 @@ function getSaveTeam(){
             const detailElement = `
                 <div class="card" style="padding-left: 24px; padding-right: 24px; margin-top: 30px;>
                 <div class="row">
-                <div class="card-content small" style="text-align: center;">
-                <a href="./article.html?id=${team.id}>
-                <img class="responsive-image" src="${team.crestUrl.replace(/^http:\/\//i,'https://')}" width="50px" alt="badge/>
-                </a>
-                <h2 class="center responsive-text">${team.name}</h2>
+                    <div class="card-content small" style="text-align: center;">
+                    <a href="./squad.html?id=${team.id}>
+                        <img class="responsive-image" src="${team.crestUrl.replace(/^http:\/\//i,'https://')}" width="50px" alt="badge/>
+                    </a>
+                    <h2 class="center responsive-text">${team.name}</h2>
                 </div>
                 <table class="striped responsive-table">
-                <thead>
-                    <tr>
-                        <th class="center">ID</th>
-                        <th class="center">Nama</th>
-                        <th class="center">Posisi</th>
-                        <th class="center">Kebangsaan</th>
-                        <th class="center">Jabatan</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th class="center">ID</th>
+                            <th class="center">Nama</th>
+                            <th class="center">Posisi</th>
+                            <th class="center">Kebangsaan</th>
+                            <th class="center">Jabatan</th>
+                        </tr>
                 </thead>
                     <tbody id="squad">
                     ${team.squad.map(player=>(
                         `<tr class="center">
-                            <td><a href="./article.html?id=${player.id}&saved=true"></a><td>
+                            <td><a href="./squad.html?id=${player.id}&saved=true"></a><td>
                             <td>${player.name}</td>
                             <td>${player.position}</td>
                             <td>${player.nationality}</td>
@@ -191,15 +193,11 @@ function getSaveTeam(){
                     )).join('')}
                     </tbody>
                 </table>
-            </div>`;
+            <div>
+        </div>`;
 
             container.innerHTML += detailElement
 
-            document.getElementById("delete").onclick = () => {
-                const idTeam = new URLSearchParams(window.location.search).get('id');
-                dbDelete(Number(idTeam));
-                console.log("Tombol FAB di Klik");
-            }
         })
     });
 } 
@@ -213,46 +211,62 @@ function getSavedTeamById(){
         teams.map(team => {
             const detailElement = `
             <div class="card" style="padding-left: 24px; padding-right: 24px; margin-top: 30px;>
-            <div class="row">
-            <div class="card-content small" style="text-align: center;">
-            <a href="./article.html?id=${team.id}>
-            <img class="responsive-image" src="${team.crestUrl.replace(/^http:\/\//i,'https://')}" width="50px" alt="badge/>
-            </a>
-            <h2 class="center responsive-text">${team.name}</h2>
-            </div>
+                <div class="row">
+                    <div class="card-content small" style="text-align: center;">
+                    <a href="./squad.html?id=${team.id}>
+                        <img class="responsive-image" src="${team.crestUrl.replace(/^http:\/\//i,'https://')}" width="50px" alt="badge/>
+                    </a>
+                    <h2 class="center responsive-text">${team.name}</h2>
+                /div>
             <table class="striped responsive-table">
-            <thead>
-                <tr>
-                    <th class="center">ID</th>
-                    <th class="center">Nama</th>
-                    <th class="center">Posisi</th>
-                    <th class="center">Kebangsaan</th>
-                    <th class="center">Jabatan</th>
-                </tr>
-            </thead>
-        <tbody id="squad">
-            ${team.squad.map(player=>(
-                `<tr class="center">
-                    <td><a href="./article.html?id=${player.id}&saved=true"></a><td>
-                    <td>${player.name}</td>
-                    <td>${player.position}</td>
-                    <td>${player.nationality}</td>
-                    <td>${player.role}</td>
-                </tr>`
+                <thead>
+                    <tr>
+                        <th class="center">ID</th>
+                        <th class="center">Nama</th>
+                        <th class="center">Posisi</th>
+                        <th class="center">Kebangsaan</th>
+                        <th class="center">Jabatan</th>
+                    </tr>
+                </thead>
+                <tbody id="squad">
+                    ${team.squad.map(player=>(
+                    `<tr class="center">
+                        <td><a href="./squad.html?id=${player.id}&saved=true"></a><td>
+                        <td>${player.name}</td>
+                        <td>${player.position}</td>
+                        <td>${player.nationality}</td>
+                        <td>${player.role}</td>
+                    </tr>`
                 )).join('')}
             </tbody>
-        </table>
-        </div>`;
+            </table>
+        <div>
+    </div>`;
 
         container.innerHTML += detailElement
        })
     });
 }
 
-function showNotifikasiIkon() {
+function showNotifikasiSimpan() {
     const title = 'Notifikasi Save';
     const options = {
-        'body': 'Artikel anda berhasil di simpan',
+        'body': 'Squad Team anda berhasil di simpan',
+        'icon': '/icons/pwa-512.png'
+    };
+    if (Notification.permission === 'granted') {
+        navigator.serviceWorker.ready.then(function(registration) {
+            registration.showNotification(title, options);
+        });
+    } else {
+        console.error('Fitur notifikasi tidak diijinkan.');
+    }
+}
+
+function showNotifikasiDelete() {
+    const title = 'Notifikasi Delete';
+    const options = {
+        'body': 'Squad team anda berhasil di hapus',
         'icon': '/icons/pwa-512.png'
     };
     if (Notification.permission === 'granted') {

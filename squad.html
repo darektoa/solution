@@ -39,29 +39,30 @@
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", ()=> {
+    document.addEventListener("DOMContentLoaded", async ()=> {
         let urlParams = new URLSearchParams(window.location.search);
-        let isFromSaved = urlParams.get("saved");
-        let item;
+        let id = urlParams.get("id");
+        let teamData = await getTeamById()
 
         let btnSave = document.getElementById("save");
+        let icon = btnSave.children[0]
 
-        if(isFromSaved){
-            btnSave.style.display = 'none';
-
-            getSavedTeamById();
-        } else {
-            
-            getTeamById()
-            .then((squad)=> {
-                console.log(squad);
-                item = squad;
-            })
+        if(await dbGetTeam(id)) {
+            icon.innerHTML = 'delete'
         }
 
-        btnSave.onclick = () => {
-            console.log("Tombol FAB di klik");
-            dbInsert(item);
+        btnSave.onclick = async () =>{
+            console.log("Tombol FAB di klik")
+
+            if (await dbGetTeam(id)){
+                dbDelete(id)
+                icon.innerHTML = 'save'
+                showNotifikasiDelete()
+            } else {
+                dbInsert(squad)
+                icon.innerHTML = 'delete'
+                showNotifikasiSimpan()
+            }
         };
     });
 </script>

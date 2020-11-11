@@ -11,6 +11,13 @@ const idbPromised = idb.open('teams', 1, upgradedB => {
     }
 });
 
+function dbGetTeam(id){
+    return idbPromised.then(db => {
+        const tx = db.transaction("teams_save","readonly")
+        return tx.objectStore("teams_save").get(parseInt(id))
+    })
+}
+
 function getAll(){
     return idbPromised.then(db => {
         const tx = db.transaction("teams_save","readonly")
@@ -38,7 +45,7 @@ function dbInsert(squad){
 function dbDelete(idTeam){
     return idbPromised.then(db => {
         const tx = db.transaction("teams_save","readwrite")
-        return tx.objectStore("teams_save").delete(idTeam)
+        return tx.objectStore("teams_save").delete(parseInt(idTeam))
     }).then(teams => {
         console.log('Team berhasil di hapus')
         return teams

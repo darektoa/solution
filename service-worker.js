@@ -1,10 +1,10 @@
-const CACHE_NAME = "football-fans-apps-v1";
+const CACHE_NAME = "football-fans-apps-v2";
 
 const urlsToCache = [
     "/",
     "/index.html",
     "/nav.html",
-    "/article.html",
+    "/squad.html",
     "/manifest.json",
     "/icons/favicon.png",
     "/icons/apple-icon.png",
@@ -15,7 +15,9 @@ const urlsToCache = [
     "/js/api.js",
     "/js/materialize.min.js",
     "/js/idb.js",
+    "/js/db.js",
     "/js/nav.js",
+    "/js/push.js",
     "/pages/team.html",
     "/pages/saved.html",
     "/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2"
@@ -63,4 +65,25 @@ self.addEventListener("fetch", function(event) {
             })
         )
     }
+});
+
+self.addEventListener('push', event => {
+    let body;
+    if (event.data){
+        body = event.data.text();
+    } else {
+        body = 'Push message no payload';
+    }
+    let options = {
+        body: body,
+        icon: 'icons/pwa-512.png',
+        vibrate: [100, 50, 100],
+        data: {
+            dateOfArrival: Date.now(),
+            primaryKey: 1
+        }
+    };
+    event.waitUntil(
+        self.registration.showNotification('Push Notification', options)
+    );
 });
