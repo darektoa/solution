@@ -93,7 +93,7 @@ function getTeamById() {
         let idParams = urlParams.get("id");
 
         if("caches" in window){
-            caches.match(`${base_URL}/teams/${idParams}`)
+            return caches.match(`${base_URL}/teams/${idParams}`)
                 .then(response => {
                     if (response) {
                         response.json().then(squads => {
