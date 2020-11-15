@@ -49,8 +49,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
           if(page === "teams"){
             getData();
-          }else if(page === "saved"){
+          }else if(page === "klasemen"){
             getStandings();
+          }else if(page === "saved"){
+            getSavedTeams();
           }
 
         } else if (this.status == 404) {

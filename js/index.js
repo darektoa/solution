@@ -1,6 +1,6 @@
 // REGISTER SERVICE WORKER
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
+  document.addEventListener("DOMContentLoaded", () => {
     navigator.serviceWorker
       .register("/service-worker.js")
       .then(() => {
@@ -13,7 +13,3 @@ if ("serviceWorker" in navigator) {
 } else {
   console.log("ServiceWorker belum didukung browser ini.");
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  getData();
-});

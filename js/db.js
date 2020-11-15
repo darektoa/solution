@@ -1,22 +1,26 @@
-var dbPromised = idb.open("info-bola", 2, function(upgradeDb) {
-    var articlesObjectStore = upgradeDb.createObjectStore("tim", {
-      keyPath: "ID"
+var dbPromised = idb.open("info-bola", 1, function(upgradeDb) {
+    var articlesObjectStore = upgradeDb.createObjectStore("teams", {
+      keyPath: "id"
     });
-    articlesObjectStore.createIndex("post_title", "post_title", { unique: false });
-  });
+    articlesObjectStore.createIndex("id_teams", "id", { unique: false });
+});
+
+  
 function saveForLater(data) {
     dbPromised
     .then(function(db) {
         var tx = db.transaction("teams", "readwrite");
         var store = tx.objectStore("teams");
         console.log(data);
-        store.add(data.result);
+        store.put(data);
         return tx.complete;
     })
     .then(function() {
-        console.log("Artikel berhasil di simpan.");
+        alert("Artikel berhasil di simpan.");
     });
 }
+
+
 function getAll() {
   return new Promise(function(resolve, reject) {
     dbPromised
@@ -24,20 +28,40 @@ function getAll() {
       var tx = db.transaction("teams", "readonly");
       var store = tx.objectStore("teams");
       return store.getAll();
-    })
-    .then(function(teams) {
+    }).then(function(teams) {
       resolve(teams);
     });
   });
 }
-function deleteForLater(data) {
-  dbPromise
+
+
+function getById(id) {
+  return new Promise(function(resolve, reject) {
+    const idTeam = Number(id);
+
+    dbPromised
+    .then(function(db) {
+      var tx = db.transaction("teams", "readonly");
+      var store = tx.objectStore("teams");
+      return store.get(idTeam);
+    }).then(function(team) {
+      resolve(team);
+    });
+  });
+}
+
+
+function deleteForLater(id) {
+  const idTeam = Number(id);
+
+  dbPromised
   .then(function(db) {
     var tx = db.transaction('teams', 'readwrite');
     var store = tx.objectStore('teams');
-        store.delete('123456789');
+        store.delete(idTeam);
     return tx.complete;
-    }).then(function() {
-        console.log('Item deleted');
+  }).then(function() {
+        alert('Item deleted');
+        window.location = '/#saved';
   });
 }

@@ -1,67 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Info EPL Apps</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Info EPL Apps" />
+    <meta name="theme-color" content="#2d6187" />
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="./icons/icon-128x128.png">
+    <link rel="stylesheet" href="./css/materialize.min.css">
+    <link rel="apple-touch-icon" href="./icons/icon-128x128.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Info EPL Apps</title>
-  <meta name="description" content="Info EPL Apps" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#2d6187" />
-  <link rel="stylesheet" href="css/materialize.min.css">
-  <link rel="icon" href="./icons/icon-128x128.png">
-  <link rel="apple-touch-icon" href="./icons/icon-128x128.png">
-</head>
+  <body>
+    <!-- Navigasi -->
+    <nav class="light-blue darken-4" role="navigation">
+      <div class="nav-wrapper container">
+        <a href="#" class="brand-logo" id="logo-container">Info EPL</a>
+        <a href="/#teams" class="sidenav-trigger" data-target="nav-mobile">
+          <i class="material-icons">arrow_back</i>
+        </a>
 
-<body>
-  <!-- Navigasi -->
-  <nav class="light-blue darken-4" role="navigation">
-    <div class="nav-wrapper container">
-      <a href="#" class="brand-logo" id="logo-container">Info EPL</a>
-      <a href="#" class="sidenav-trigger" data-target="nav-mobile">☰</a>
-
-      <ul class="topnav right hide-on-med-and-down"></ul>
-      <ul class="sidenav" id="nav-mobile"></ul>
+        <ul class="topnav right hide-on-med-and-down"></ul>
+        <ul class="sidenav" id="nav-mobile"></ul>
+      </div>
+    </nav>
+    <!-- Akhir Navigasi -->
+    <div class="fixed-action-btn">
+      <a class="btn-floating btn-large red">
+        <i class="large material-icons" id="save">save</i>
+      </a>
     </div>
-  </nav>
-  <!-- Akhir Navigasi -->
-  <div class="fixed-action-btn">
-    <a class="btn-floating btn-large red" id="save">
-      <i class="large material-icons">save</i>
-    </a>
-  </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var urlParams = new URLSearchParams(window.location.search);
-      var isFromSaved = urlParams.get("saved");
-  
-      var btnSave = document.getElementById("save");
-  
-      if (isFromSaved) {
-        btnSave.style.display = 'none';
-  
-        getSavedTeamsById();
-      } else {
-        var item = getTeamsById();
-      }
-  
-      btnSave.onclick = function() {
-        console.log("Tombol FAB di klik.");
-        item.then(function(teams) {
-          saveForLater(teams);
-        });
-      };
-    });
+    <div class="container" id="body-content" style="display: flex; justify-content: center;"></div>
 
-  </script>
-  <script src="js/idb.js"></script>
-  <script src="js/db.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var isFromSaved = urlParams.get("saved");
+    
+        var btnSave = document.getElementById("save");
+    
+        if (isFromSaved) {
+          btnSave.innerText = 'delete';
+          var item = getSavedTeamById();
 
-  <div class="container" id="body-content"></div>
-  <script src="js/materialize.min.js"></script>
-  <script src="js/api.js"></script>
-  <script src="js/index.js"></script>
-</body>
+          btnSave.onclick = function() {
+            console.log("Tombol FAB di klik.");
+            item.then(team=>{
+              deleteForLater(team.id);
+            })
+          };
 
+        } else {
+          var item = getTeamById();
+
+          btnSave.onclick = function() {
+            console.log("Tombol FAB di klik.");
+            item.then(team=>{
+              saveForLater(team);
+            })
+          };
+        }
+    
+      });
+
+    </script>
+
+    <script src="js/materialize.min.js"></script>
+    <script src="js/idb.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/index.js"></script>
+  </body>
 </html>

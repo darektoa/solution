@@ -1,5 +1,6 @@
-const team_url = `http://api.football-data.org/v2/competitions/2021/teams`;
-const standings_url = `https://api.football-data.org/v2/competitions/2021/standings`;
+const team_url = `http://api.football-data.org/v2/teams/`;
+const teams_url = `http://api.football-data.org/v2/competitions/2021/teams/`;
+const standings_url = `https://api.football-data.org/v2/competitions/2021/standings/`;
 
 // Mengecek kode status dari response
 const status = response => {
@@ -23,9 +24,11 @@ const error = error => {
   console.log(`Error: ${error}`);
 }
 
+
+
 const getData = () => {
   // Untuk mendapatkan data-data tim liga inggris
-  fetch(team_url, {
+  fetch(teams_url, {
       headers: {
         'X-Auth-Token': 'cf02b37a12be47bd9c51e1c3db3e1d5f'
       }
@@ -45,7 +48,7 @@ const getData = () => {
               <span class="card-title truncate">${team.name}</span>
             </div>
             <div class="card-action left-align">
-              <a href="./detail.html?id=${team.id}&saved=true">Details</a>
+              <a href="./detail.html?id=${team.id}">Details</a>
             </div>
           </div>
         `;
@@ -53,154 +56,127 @@ const getData = () => {
       document.getElementById('teams').innerHTML = teamsHTML;
     })
     .catch(error);
+}
 
-    // Untuk mendapatkan data klasemen liga inggris
-  const getStandings = () => {
-    fetch(standings_url, {
+
+
+function getTeamById() {
+  return new Promise((resolve, reject)=>{
+    const urlParams = new URLSearchParams(window.location.search);
+    const idParam = urlParams.get("id");
+    
+    fetch(team_url + idParam, {
       headers: {
         'X-Auth-Token': 'cf02b37a12be47bd9c51e1c3db3e1d5f'
       }
     })
     .then(status)
     .then(json)
-    .then(data => {
-      let standingHTML = ``;
-      data.standings.forEach(standing => {
-        let standingList = ``;
-
-        standing.table.forEach(team => {
-          standingList += `
-          <tr>
-            <td class="center-align">${team.position}</td>
-            <td>      
-                <img width="25" src="${team.team.crestUrl}">
-            </td>
-            <td class="center-align">${team.playedGames}</td>
-            <td class="center-align">${team.won}</td>
-            <td class="center-align">${team.draw}</td>
-            <td class="center-align">${team.lost}</td>
-            <td class="center-align">${team.points}</td>
-            <td class="center-align">${team.goalsFor}</td>
-            <td class="center-align">${team.goalsAgainst}</td>
-          </tr>
-        `;
-        })
-        
-
-        standingHTML = `
-          <div class="card">
-              <table class="responsive-table centered highlight">
-                <thead>
-                  <tr>
-                    <th class="center-align">Position</th>
-                    <th class="center-align">Team</th>
-                    <th class="center-align">Played</th>
-                    <th class="center-align">Won</th>
-                    <th class="center-align">Draw</th>
-                    <th class="center-align">Lost</th>
-                    <th class="center-align">Points</th>
-                    <th class="center-align">Goals For</th>
-                    <th class="center-align">Goals Against</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${standingList}
-                </tbody>
-              </table>
+    .then(function(team) {
+      console.log(team);
+      const articleHTML = `
+        <div class="card" style="width: 90%; max-width: 500px;">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img src="${team.crestUrl}" />
           </div>
-        `;
+          <div class="card-content">
+            <span class="card-title center">${team.name}</span>
+          </div>
+        </div>
+      `;
+      // Sisipkan komponen card ke dalam elemen dengan id #content
+      document.getElementById("body-content").innerHTML = articleHTML;
+      resolve(team);
+    });
+  })
+}
+
+
+
+function getSavedTeamById() {
+  return new Promise((resolve, reject)=>{
+    const urlParams = new URLSearchParams(window.location.search);
+    const idParam = urlParams.get("id");
+    
+    getById(idParam)
+    .then(function(team) {
+      console.log(team);
+      const articleHTML = `
+        <div class="card" style="width: 90%; max-width: 500px;">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img src="${team.crestUrl}" />
+          </div>
+          <div class="card-content">
+            <span class="card-title center">${team.name}</span>
+          </div>
+        </div>
+      `;
+      // Sisipkan komponen card ke dalam elemen dengan id #content
+      document.getElementById("body-content").innerHTML = articleHTML;
+      resolve(team);
+    });
+  })
+}
+
+
+
+function getSavedTeams() {
+  getAll()
+  .then(function(teams) {
+    let teamsHTML = ``;
+
+    if(teams.length === 0) teamsHTML = '<p>Tidak ada yang tersimpan</p>';
+
+    teams.forEach(team => {
+      teamsHTML += `
+        <div class="card">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img src="${team.crestUrl}" />
+          </div>
+          <div class="card-content">
+            <span class="card-title truncate">${team.name}</span>
+          </div>
+          <div class="card-action left-align">
+            <a href="./detail.html?id=${team.id}&saved=true">Details</a>
+          </div>
+        </div>
+      `;
+    });
+    document.getElementById('teams').innerHTML = teamsHTML;
+  })
+}
+
+
+// Fungsi untuk mendapatkan data-data klasemen liga inggris
+const getStandings = () => {
+  fetch(standings_url, {
+      headers: {
+        'X-Auth-Token': 'cf02b37a12be47bd9c51e1c3db3e1d5f'
+      }
+    })
+  .then(status)
+  .then(json)
+  .then(data => {
+    let standingList = ``;
+    data.standings.forEach(standing => {
+      standing.table.forEach(team => {
+        standingList += `
+        <tr>
+          <td class="center-align">${team.position}</td>
+          <td>      
+              <img width="25" src="${team.team.crestUrl}">
+          </td>
+          <td class="center-align">${team.playedGames}</td>
+          <td class="center-align">${team.won}</td>
+          <td class="center-align">${team.draw}</td>
+          <td class="center-align">${team.lost}</td>
+          <td class="center-align">${team.points}</td>
+          <td class="center-align">${team.goalsFor}</td>
+          <td class="center-align">${team.goalsAgainst}</td>
+        </tr>`;
       })
-      document.getElementById('standings').innerHTML = standingHTML;
-      })
+    });
+    
+    document.getElementById('standings').innerHTML = standingList;
+  })
 }
-}
-function getSavedTeamsById() {
-  var urlParams = new URLSearchParams(window.location.search);
-  var idParam = urlParams.get("id");
-  
-  getById(idParam).then(function(teams) {
-    articleHTML = '';
-    var articleHTML = `
-    <div class="card">
-      <div class="card-image waves-effect waves-block waves-light">
-        <img src="${teams.cover}" />
-      </div>
-      <div class="card-content">
-        <span class="card-title">${teams.post_title}</span>
-        ${snarkdown(teams.post_content)}
-      </div>
-    </div>
-  `;
-    // Sisipkan komponen card ke dalam elemen dengan id #content
-    document.getElementById("body-content").innerHTML = articleHTML;
-  });
-}
-
-
-// // Fungsi untuk mendapatkan data-data klasemen liga inggris
-// const getStandings = () => {
-//   fetch(standings_url, {
-//       headers: {
-//         'X-Auth-Token': 'cf02b37a12be47bd9c51e1c3db3e1d5f'
-//       }
-//     })
-//     .then(status)
-//     .then(json)
-//     .then(data => {
-
-//       let standingHTML = ``;
-      
-//       data.standings.forEach(standing => {
-//         let standingList = ``;
-        
-//         // nanti buat ngirim id ke halaman detail tim
-//         // <a href="./detailTeam.html?id=${standing.team.id}">
-//         standing.table.forEach(team => {
-//           standingList += `
-//           <tr>
-//             <td class="center-align">${team.position}</td>
-//             <td>      
-//                 <img width="25" src="${team.team.crestUrl}">
-//             </td>
-//             <td class="center-align">${team.playedGames}</td>
-//             <td class="center-align">${team.won}</td>
-//             <td class="center-align">${team.draw}</td>
-//             <td class="center-align">${team.lost}</td>
-//             <td class="center-align">${team.points}</td>
-//             <td class="center-align">${team.goalsFor}</td>
-//             <td class="center-align">${team.goalsAgainst}</td>
-//           </tr>
-//         `;
-//         })
-
-//         standingHTML = `
-//           <div class="card">
-//               <table class="responsive-table centered highlight">
-//                 <thead>
-//                   <tr>
-//                     <th class="center-align">Position</th>
-//                     <th class="center-align">Team</th>
-//                     <th class="center-align">Played</th>
-//                     <th class="center-align">Won</th>
-//                     <th class="center-align">Draw</th>
-//                     <th class="center-align">Lost</th>
-//                     <th class="center-align">Points</th>
-//                     <th class="center-align">Goals For</th>
-//                     <th class="center-align">Goals Against</th>
-//                   </tr>
-//                 </thead>
-//                 <tbody>
-//                   ${standingList}
-//                 </tbody>
-//               </table>
-//           </div>
-//         `;
-//       })
-//       document.getElementById('standings').innerHTML = standingHTML;
-//     })
-// }
-
-// const allData = () => {
-//   getTeams();
-//   getStandings();
-// }
