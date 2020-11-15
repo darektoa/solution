@@ -41,7 +41,7 @@ self.addEventListener("install", function (event) {
 self.addEventListener("fetch", function (event) {
   const base_url = "football-data.org";
   const online = navigator.onLine;
-  console.log(event.request);
+  
   if (event.request.url.includes(base_url) && online){
     event. respondWith(
       caches.open(CACHE_NAME).then(function (cache) {
