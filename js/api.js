@@ -45,7 +45,7 @@ const getData = () => {
               <span class="card-title truncate">${team.name}</span>
             </div>
             <div class="card-action left-align">
-              <a href="./pages/team.html?id=${team.id}&saved=true">Details</a>
+              <a href="./detail.html?id=${team.id}&saved=true">Details</a>
             </div>
           </div>
         `;
@@ -135,6 +135,7 @@ function getSavedTeamsById() {
     document.getElementById("body-content").innerHTML = articleHTML;
   });
 }
+
 
 // // Fungsi untuk mendapatkan data-data klasemen liga inggris
 // const getStandings = () => {

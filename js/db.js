@@ -30,3 +30,14 @@ function getAll() {
     });
   });
 }
+function deleteForLater(data) {
+  dbPromise
+  .then(function(db) {
+    var tx = db.transaction('teams', 'readwrite');
+    var store = tx.objectStore('teams');
+        store.delete('123456789');
+    return tx.complete;
+    }).then(function() {
+        console.log('Item deleted');
+  });
+}
