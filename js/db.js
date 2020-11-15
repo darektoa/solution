@@ -7,8 +7,8 @@ var dbPromised = idb.open("info-bola", 2, function(upgradeDb) {
 function saveForLater(data) {
     dbPromised
     .then(function(db) {
-        var tx = db.transaction("datas", "readwrite");
-        var store = tx.objectStore("datas");
+        var tx = db.transaction("teams", "readwrite");
+        var store = tx.objectStore("teams");
         console.log(data);
         store.add(data.result);
         return tx.complete;
@@ -21,12 +21,12 @@ function getAll() {
   return new Promise(function(resolve, reject) {
     dbPromised
     .then(function(db) {
-      var tx = db.transaction("datas", "readonly");
-      var store = tx.objectStore("datas");
+      var tx = db.transaction("teams", "readonly");
+      var store = tx.objectStore("teams");
       return store.getAll();
     })
-    .then(function(datas) {
-      resolve(datas);
+    .then(function(teams) {
+      resolve(teams);
     });
   });
 }

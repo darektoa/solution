@@ -45,7 +45,7 @@ const getData = () => {
               <span class="card-title truncate">${team.name}</span>
             </div>
             <div class="card-action left-align">
-              <a href="./pages/team.html?id=${team.id}">Details</a>
+              <a href="./pages/team.html?id=${team.id}&saved=true">Details</a>
             </div>
           </div>
         `;
@@ -113,6 +113,27 @@ const getData = () => {
       document.getElementById('standings').innerHTML = standingHTML;
       })
 }
+}
+function getSavedTeamsById() {
+  var urlParams = new URLSearchParams(window.location.search);
+  var idParam = urlParams.get("id");
+  
+  getById(idParam).then(function(teams) {
+    articleHTML = '';
+    var articleHTML = `
+    <div class="card">
+      <div class="card-image waves-effect waves-block waves-light">
+        <img src="${teams.cover}" />
+      </div>
+      <div class="card-content">
+        <span class="card-title">${teams.post_title}</span>
+        ${snarkdown(teams.post_content)}
+      </div>
+    </div>
+  `;
+    // Sisipkan komponen card ke dalam elemen dengan id #content
+    document.getElementById("body-content").innerHTML = articleHTML;
+  });
 }
 
 // // Fungsi untuk mendapatkan data-data klasemen liga inggris

@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           if(page === "teams"){
             getData();
-          }else if(page === "klasmen"){
+          }else if(page === "saved"){
             getStandings();
           }
 
