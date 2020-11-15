@@ -55,6 +55,7 @@ const getData = () => {
     .catch(error);
 
     // Untuk mendapatkan data klasemen liga inggris
+  const getStandings = () => {
     fetch(standings_url, {
       headers: {
         'X-Auth-Token': 'cf02b37a12be47bd9c51e1c3db3e1d5f'
@@ -84,6 +85,7 @@ const getData = () => {
           </tr>
         `;
         })
+        
 
         standingHTML = `
           <div class="card">
@@ -110,6 +112,7 @@ const getData = () => {
       })
       document.getElementById('standings').innerHTML = standingHTML;
       })
+}
 }
 
 // // Fungsi untuk mendapatkan data-data klasemen liga inggris

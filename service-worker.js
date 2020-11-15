@@ -12,7 +12,8 @@ var urlsToCache = [
   "/js/nav.js",
   "/js/api.js",
   "/js/index.js",
-  "/icon.png"
+  "/icon.png",
+  "/js/db.js"
 ];
 
 self.addEventListener("install", function (event) {

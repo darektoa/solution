@@ -43,10 +43,19 @@ document.addEventListener("DOMContentLoaded", function () {
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4) {
         var content = document.querySelector("#body-content");
+
         if (this.status == 200) {
           content.innerHTML = xhttp.responseText;
+
+          if(page === "teams"){
+            getData();
+          }else if(page === "klasmen"){
+            getStandings();
+          }
+
         } else if (this.status == 404) {
           content.innerHTML = "<p>Halaman tidak ditemukan.</p>";
+
         } else {
           content.innerHTML = "<p>Ups.. halaman tidak dapat diakses.</p>";
         }
