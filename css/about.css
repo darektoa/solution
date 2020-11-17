@@ -1,0 +1,6 @@
+@import url('./ucl.css');
+.about {
+   margin-top: 2rem;
+   padding: 3rem;
+   text-align: justify;
+}

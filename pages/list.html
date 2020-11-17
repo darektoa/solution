@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<meta
+			name="description"
+			content="This website was created by Galih Permana. An freshman, intuitive, creative, and hard worker person. Frontend enthusiast, networking enthusiast, and many more. This project will be submit as submission on Dicoding Progressive Web Apps course.
+
+         Todo list is application that can you used to listing what will you do, today, tomorrow, next week or next month. The purposes of this app is that user can notice her activity or something that can he/she going to do with reducing the forget behavior."
+		/>
+		<title>What a Goal</title>
+		<link rel="stylesheet" href="../css/materialize.min.css" />
+		<link
+			href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="../css/pl.css" />
+		<!-- MANIFEST -->
+		<link rel="manifest" href="../manifest.json" />
+		<!-- ios support -->
+		<link rel="apple-touch-icon" href="/img/icons/96.png" />
+		<meta name="apple-mobile-web-app-status-bar" content="#1a237e" />
+		<meta name="theme-color" content="#1a237e" />
+	</head>
+	<body>
+		<!-- NAVBAR -->
+		<nav class="indigo darken-4">
+			<div class="nav-wrapper container">
+				<a href="../index.html" class="brand-logo left">What a Goal</a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<li><a href="../index.html">Champions League</a></li>
+					<li><a href="../pages/pl.html">Premier League</a></li>
+					<li><a href="../pages/list.html">My List</a></li>
+					<li><a href="../pages/about.html">About</a></li>
+				</ul>
+				<a href="#" data-target="mobile-nav" class="sidenav-trigger right">
+					<i class="large material-icons">dehaze</i>
+				</a>
+				<ul class="sidenav" id="mobile-nav">
+					<li><a href="../index.html">Champions League</a></li>
+					<li><a href="../pages/pl.html">Premier League</a></li>
+					<li><a href="../pages/list.html">My List</a></li>
+					<li><a href="../pages/about.html">About</a></li>
+				</ul>
+			</div>
+		</nav>
+		<!-- END OF NAVBAR -->
+
+		<!-- BODY -->
+		<div class="container" id="body-content-3">
+			<div class="add-task" id="add-task">
+				<div class="mytask-wrapper">
+					<div class="mytask-text">
+						<h5 class="addmatch-title" style="font-weight: 600">
+							My Match Schedules
+						</h5>
+					</div>
+				</div>
+
+				<div class="card">
+					<p class="namagrup">Add Schedules</p>
+					<div class="row task-form addtask-wrapper">
+						<form class="col s12 scheduleform">
+							<div class="row">
+								<div class="input-field col s12">
+									<input id="task-name" type="text" class="validate" required/>
+									<label for="task-name">Match(vs)</label>
+								</div>
+								<div class="input-field col s12">
+									<input
+										id="date"
+										type="text"
+                              class="datepicker validate"
+                              required
+									/>
+									<label for="date">Date</label>
+								</div>
+								<div class="input-field col s12">
+									<input
+										id="description"
+										type="text"
+                              class="validate"
+                              required
+									/>
+									<label for="description">Match Description</label>
+								</div>
+								<div class="input-field col s12">
+									<input
+										id="time"
+										type="text"
+                              class="timepicker validate"
+                              required
+									/>
+									<label for="time">Start Time</label>
+								</div>
+								<div class="input-field col s12">
+									<a
+										class="waves-effect waves-light btn indigo darken-4 mytask-button addmatch-button"
+									>
+										Add Match
+									</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="listmatch">
+				<div class="card">
+					<p class="namagrup">My Schedules</p>
+					<table class="centered striped responsive-table">
+						<thead>
+							<tr>
+								<th>Match</th>
+								<th>Date</th>
+								<th>Description</th>
+								<th>Time</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody class="schedulecontent"></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- END OF BODY -->
+
+      <script src="../js/registersw.js"></script>
+      <!-- <script src="./js/push.js"></script> -->
+		<script src="../js/idb.js"></script>
+		<script src="../js/db.js"></script>
+		<script src="../js/getdata.js"></script>
+		<script src="../js/materialize.min.js"></script>
+		<script src="../js/setup.js"></script>
+	</body>
+</html>

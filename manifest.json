@@ -1,0 +1,52 @@
+{
+   "name": "What a Goal",
+   "gcm_sender_id": "772472312233",
+   "short_name": "What a Goal",
+   "start_url": "/index.html",
+   "display": "standalone",
+   "background_color": "#ffffff",
+   "theme_color": "#1a237e",
+   "orientation": "portrait-primary",
+   "icons": [
+      {
+         "src": "/img/icons/72.png",
+         "type": "image/png",
+         "sizes": "72x72"
+      },
+      {
+         "src": "/img/icons/96.png",
+         "type": "image/png",
+         "sizes": "96x96"
+      },
+      {
+         "src": "/img/icons/128.png",
+         "type": "image/png",
+         "sizes": "128x128"
+      },
+      {
+         "src": "/img/icons/144.png",
+         "type": "image/png",
+         "sizes": "144x144"
+      },
+      {
+         "src": "/img/icons/152.png",
+         "type": "image/png",
+         "sizes": "152x152"
+      },
+      {
+         "src": "/img/icons/192.png",
+         "type": "image/png",
+         "sizes": "192x192"
+      },
+      {
+         "src": "/img/icons/384.png",
+         "type": "image/png",
+         "sizes": "384x384"
+      },
+      {
+         "src": "/img/icons/512.png",
+         "type": "image/png",
+         "sizes": "512x512"
+      }
+   ]
+}

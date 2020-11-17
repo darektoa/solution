@@ -1,0 +1,14 @@
+@import url('./ucl.css');
+
+.addmatch-title{
+   margin-bottom: 2rem;
+   /* border: 1px solid red; */
+   text-align: center;
+   font-weight: 600;
+}
+.addtask-wrapper {
+	background-color: rgb(255, 255, 255);
+	/* border-radius: 1rem; */
+   padding: 1rem;
+
+}
