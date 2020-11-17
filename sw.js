@@ -11,7 +11,6 @@ let assets = [
 	'/js/getdata.js',
 	'/js/idb.js',
 	'/js/materialize.min.js',
-	'/js/push.js',
 	'/js/registersw.js',
 	'/js/setup.js',
 	'/js/api.js',
@@ -48,20 +47,22 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
 	console.log('fetching');
 	let baseurl = 'https://api.football-data.org/v2/competitions/2021/standings';
-
-	e.respondWith(
-		caches.match(e.request).then((cacheRes) => {
-			return (
-				cacheRes ||
-				fetch(e.request).then((fetchRes) => {
-					return caches.open(dynamicCache).then((cache) => {
-						cache.put(e.request.url, fetchRes.clone());
-						return fetchRes;
-					});
-				})
-			);
-		})
-	);
+	
+	if(e.request.url.match(/^(http|https)/i)){
+		e.respondWith(
+			caches.match(e.request).then((cacheRes) => {
+				return (
+					cacheRes ||
+					fetch(e.request).then((fetchRes) => {
+						return caches.open(dynamicCache).then((cache) => {
+							cache.put(e.request, fetchRes.clone());
+							return fetchRes;
+						});
+					})
+				);
+			})
+		);
+	}
 });
 
 self.addEventListener('push', function (event) {

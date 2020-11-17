@@ -123,23 +123,23 @@ document.addEventListener('DOMContentLoaded', (e) => {
 		let showStandingsPL = (standing) => {
 			let bodyContent = document.querySelector('#body-content-2');
 			bodyContent.innerHTML += `
-      <div class="card">
-         <p class="namagrup">${standing.stage}</p>
-         <table class="centered striped responsive-table">
-            <thead>
-               <tr>
-                  <th>Position</th>
-                  <th>Clubs</th>
-                  <th>Win</th>
-                  <th>Lose</th>
-                  <th>Draw</th>
-                  <th>Points</th>
-                  <th>Play</th>
-               </tr>
-            </thead>
-            <tbody class="tableContent"></tbody>
-         </table>
-      </div>`;
+            <div class="card">
+               <p class="namagrup">${standing.stage}</p>
+               <table class="centered striped responsive-table">
+                  <thead>
+                     <tr>
+                        <th>Position</th>
+                        <th>Clubs</th>
+                        <th>Win</th>
+                        <th>Lose</th>
+                        <th>Draw</th>
+                        <th>Points</th>
+                        <th>Play</th>
+                     </tr>
+                  </thead>
+                  <tbody class="tableContent"></tbody>
+               </table>
+            </div>`;
 
 			let TableContent = document.querySelector('.tableContent');
 			standing.table.forEach((table) => {
@@ -163,7 +163,10 @@ document.addEventListener('DOMContentLoaded', (e) => {
 		fetchPL();
 	};
 
-	let url = window.location.href;
+   let url = window.location.pathname;
+
+   if(url === '/') url = '/index.html';
+   
 	if (url.indexOf('index.html') > -1) {
 		uclAPI();
 	} else {
