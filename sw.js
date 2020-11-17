@@ -35,6 +35,7 @@ self.addEventListener('install', (e) => {
 
 self.addEventListener('activate', (e) => {
 	console.log('activate');
+	clients.claim();
 	e.waitUntil(
 		caches.keys().then((key) => {
 			key.filter(
