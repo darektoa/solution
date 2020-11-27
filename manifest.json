@@ -1,0 +1,30 @@
+{
+    "lang": "en-us",
+    "name": "Info Bola",
+    "gcm_sender_id": "892207367145",
+    "short_name": "InfoBola",
+    "description": "Klasemen Sepak Bola",
+    "category": ["football", "sports"],
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#14274e",
+    "theme_color": "#14274e",
+    "icons": [
+        {
+            "src": "images/icon-144.png",
+            "sizes": "144x144",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }, {
+            "src": "images/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }, {
+            "src": "images/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

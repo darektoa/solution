@@ -1,0 +1,22 @@
+.center-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.icon-team {
+  margin: 0 5px;
+  height: 25px;
+  max-width: 100%;
+}
+
+.flex-column-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.img-contain {
+  height: 200px;
+  object-fit: contain;
+}
